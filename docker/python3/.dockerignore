@@ -1,0 +1,19 @@
+# Git
+.git
+.gitignore
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Docker & Compose files
+docker-compose.yml
+deploy.sh
+
+# Arquivos sensíveis
+.env
+
+# IDEs
+.vscode/
+.idea/
+
