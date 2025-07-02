@@ -1,24 +1,25 @@
-# Python
+# Arquivos de ambiente
+.env*
+!*.example     # permite subir um .env.example com chaves dummy
+
+# Cache do Python
 __pycache__/
-*.py[cod]
-*.egg-info/
-.env
+*.pyc
 
-# Logs
-*.log
-
-# OS files
-.DS_Store
-
-# Virtual environments
-venv/
-.env/
-.venv/
-
-# IDEs
-.vscode/
-.idea/
-
-# Docker
+# Docker cache
 docker/python3/__pycache__/
+docker/python3/*.pyc
+
+# Diretórios do Git
+.git/
+
+# Arquivos de build
+*.zip
+*.tar.gz
+*.egg-info/
+dist/
+build/
+
+# Arquivos locais/shell
+*.sh
 
