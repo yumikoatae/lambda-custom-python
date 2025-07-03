@@ -1,0 +1,18 @@
+{
+  "httpMethod": "GET",
+  "path": "/apigateway",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "",
+  "queryStringParameters": {
+    "nome": "Yumiko"
+  },
+  "requestContext": {
+    "http": {
+      "method": "GET"
+    }
+  }
+}
+
+

@@ -1,25 +1,42 @@
-import sys
 import json
-from handlers.apigateway import handle_apigateway
-from handlers.sqs import handle_sqs
-from runtime.context import get_context
-from runtime.libs.log import write
+from server import server
+from werkzeug.test import EnvironBuilder
+from werkzeug.wrappers import Request
 
 def handler(event, context):
     if "httpMethod" in event:
-        return handle_apigateway(event, context)
-    elif "Records" in event:
-        return handle_sqs(event, context)
-    else:
+        builder = EnvironBuilder(
+            path=event.get("path", "/apigateway"),
+            method=event["httpMethod"],
+            headers=event.get("headers"),
+            data=event.get("body", ""),
+        )
+        env = builder.get_environ()
+        request = Request(env)
+        response = server.dispatch_request(request)
         return {
-            "statusCode": 400,
-            "body": json.dumps({"error": "Unknown event"})
+            "statusCode": response.status_code,
+            "headers": dict(response.headers),
+            "body": response.get_data(as_text=True),
         }
 
-def main():
-    raw_input = sys.stdin.read()
-    event = json.loads(raw_input)
-    context = get_context()
-    response = handler(event, context)
-    print(json.dumps(response))
+    elif "Records" in event:
+        builder = EnvironBuilder(
+            path="/sqs",
+            method="POST",
+            data=json.dumps(event),
+            headers={"Content-Type": "application/json"},
+        )
+        env = builder.get_environ()
+        request = Request(env)
+        response = server.dispatch_request(request)
+        return {
+            "statusCode": response.status_code,
+            "headers": dict(response.headers),
+            "body": response.get_data(as_text=True),
+        }
 
+    return {
+        "statusCode": 400,
+        "body": json.dumps({"error": "Unsupported event type"}),
+    }

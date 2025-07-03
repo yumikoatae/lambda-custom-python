@@ -1,12 +1,12 @@
 #!/bin/sh
 
-export PYTHONPATH=/var/task:$PYTHONPATH
+export PYTHONPATH=/var/task
 
 if [ "$LAMBDA_ENV" = "dev" ]; then
-  echo "🔧 Iniciando em modo DEV..."
-  exec python3 /var/task/server.py
+    echo "🚀 Modo Desenvolvimento: iniciando main.py para testes locais"
+    exec python3 /var/task/main.py
 else
-  echo "🚀 Iniciando em modo PROD (AWS Lambda)..."
-  exec /var/runtime/bootstrap
+    echo "⚙️ Modo Produção: iniciando runtime oficial AWS Lambda"
+    exec /var/runtime/bootstrap
 fi
 

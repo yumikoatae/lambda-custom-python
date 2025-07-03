@@ -1,0 +1,17 @@
+{
+  "Records": [
+    {
+      "messageId": "msg-1",
+      "body": "Mensagem de teste 1"
+    },
+    {
+      "messageId": "msg-2",
+      "body": "Mensagem de teste 2"
+    },
+    {
+      "messageId": "msg-3",
+      "body": "fail: Mensagem simulando falha"
+    }
+  ]
+}
+
